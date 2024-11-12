@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Kanban from "./Components/Kanban";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    fetch("https://api.quicksell.co/v1/internal/frontend-assignment")
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("json", json)
+        setData(json)
+  });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {data.tickets && data.users && <Kanban tickets={data.tickets} users={data.users} />}
     </div>
   );
 }
 
 export default App;
+
